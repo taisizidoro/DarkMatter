@@ -8,7 +8,7 @@ f = open('analysis.csv', 'r')
 reader = csv.DictReader(f)
 lista = list(reader)
 
-pts = []
+pts = [] 
 etas = []
 phis = []
 massa = []
