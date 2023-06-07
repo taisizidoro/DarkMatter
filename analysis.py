@@ -14,12 +14,14 @@ for i in range(0, len(lista)):
 
         if key == "nTau":
             if value == "2":
+                # print(key,value)
                 select.append(lista[i])
 
         if key == "Tau_pt":
             new = eval(value)
             select[i][key] = []
             for k in new:
+                # print(key,k)
                 if k < 20:
                     continue
                 select[i][key].append(k)
@@ -28,7 +30,8 @@ for i in range(0, len(lista)):
             new = eval(value)
             select[i][key] = []
             for k in new:
-                if abs(k) > 2.4:
+                # print(key,k)
+                if k > 2.4:
                     continue
                 select[i][key].append(k)
 
@@ -36,7 +39,8 @@ for i in range(0, len(lista)):
             new = eval(value)
             select[i][key] = []
             for k in new:
-                if abs(k) > 0.2:
+                # print(key,k)
+                if k > 0.2:
                     continue
                 select[i][key].append(k)
 
@@ -60,6 +64,7 @@ for i in range(0, len(lista)):
             new = eval(value)
             select[i][key] = []
             for k in new:
+                # print(key,k)
                 if k < 8:  # if k << 8:
                     continue
                 select[i][key].append(k)
@@ -67,16 +72,75 @@ for i in range(0, len(lista)):
 
         if key == "nJet":
             select[i][key] = []
-            if int(value) >= 1:
+            if int(value) >= 1 and int(value) <= 10:
+                # print(key,value)
                 select[i][key].append(lista[i])
+
+#------------------------------------------------------------------------------------
+#o problema começa a partir daqui: 
+#erro abaixo: 
+#TypeError: '<' not supported between instances of 'ellipsis' and 'float' 
+#TypeError: '<' not supported between instances of 'ellipsis' and 'int'
 
         if key == "Jet_pt":
             new = eval(value)
             select[i][key] = []
             for k in new:
-                if int(k) < 20:
-                    continue
+              try:
+                if k < 20:
+                  continue
+              except (RuntimeError, TypeError, NameError):
+                pass
                 select[i][key].append(k)
+                # print(key,k)
+
+        if key == "Jet_eta":
+            new = eval(value)
+            select[i][key] = []
+            for k in new:
+              try:
+                if k > 2.4:
+                    continue
+              except (RuntimeError, TypeError, NameError):
+                pass
+                select[i][key].append(k)
+                # print(key,k)
+
+        if key == "Jet_area":
+            new = eval(value)
+            select[i][key] = []
+            for k in new:
+              try:
+                if k < 0.4:
+                    continue
+              except (RuntimeError, TypeError, NameError):
+                pass
+                select[i][key].append(k)
+                # print(key,k)
+
+        if key == "Jet_puId":
+            new = eval(value)
+            select[i][key] = []
+            for k in new:
+              try:
+                if k != 7:
+                    continue
+              except (RuntimeError, TypeError, NameError):
+                pass
+                select[i][key].append(k)
+                # print(key,k)
+
+        if key == "Jet_jetId":
+            new = eval(value)
+            select[i][key] = []
+            for k in new:
+              try:
+                if k != 3:
+                    continue
+              except (RuntimeError, TypeError, NameError):
+                pass
+                select[i][key].append(k)
+                # print(key,k)
 
 
 df = pd.DataFrame(select)
